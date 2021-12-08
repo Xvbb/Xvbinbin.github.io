@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://xvbinbin.xyz/"/>
-  <updated>2021-12-08T10:58:21.178Z</updated>
+  <updated>2021-12-08T11:01:04.766Z</updated>
   <id>https://xvbinbin.xyz/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://xvbinbin.xyz/2021/12/08/attention-is-all-your-need/"/>
     <id>https://xvbinbin.xyz/2021/12/08/attention-is-all-your-need/</id>
     <published>2021-12-08T08:33:54.000Z</published>
-    <updated>2021-12-08T10:58:21.178Z</updated>
+    <updated>2021-12-08T11:01:04.766Z</updated>
     
     <summary type="html">
     
@@ -29,7 +29,7 @@
       
         
         
-          &lt;p&gt;&lt;img src=&quot;./Attention-Is-All-Your-Need/1.png&quot; alt=&quot;1.png&quot;&gt;&lt;br&gt;Attention&lt;/p&gt;
+          &lt;p&gt;&lt;img src=&quot;1.png&quot; alt=&quot;1.png&quot;&gt;&lt;br&gt;Attention&lt;/p&gt;
 &lt;p&gt;• 常规Seq2Seq的RNN网络,存在imformation
         
       
