@@ -4,6 +4,29 @@
   
     
     <entry>
+      <title>Attention Is All Your Need</title>
+      <link href="/2021/12/08/attention-is-all-your-need/"/>
+      <url>/2021/12/08/attention-is-all-your-need/</url>
+      
+        <content type="html"><![CDATA[<p><img src="./Attention-Is-All-Your-Need/1.png" alt="1.png"><br>Attention</p><p>• 常规Seq2Seq的RNN网络,存在imformation bottleneck问题.如图所示,所有源语句的信息都存储在encoder的一个隐藏状态里,所有的生成信息都基于此形成.attention的设计可以解决这问题<br>• Core idea: on each step of the decoder, use direct connection to the encoder to focus<br>on a particular part of the source sequence核心思想是,在decoder的每一时序,通过decoder和encoder的direct link,使注意力集中在一部分词句上,从而判断接下来是什么词.</p><p><img src="./Attention-Is-All-Your-Need/2.png" alt="2.png"><br>encoder照常,每一个时序的decoder,都会调用encoder每一个位置的隐藏状态信息,作内积,得到attention scores.为每一个隐藏状态打分后,通过softmax得到attention分布.从分布可以看出当前decoder应该focus on在哪个隐藏状态上.</p><p><img src="./Attention-Is-All-Your-Need/3.png" alt="3.png"><br>把attention分布里各项相加,得到attention输出,表示encoder的隐藏状态,包含的信息主要是受到高注意力的那些隐藏状态.<br>将输出和decoder的起始状态链接,得到$\hat y$,预测第一个词的输出,如图所示,是he.<br>之后处理后面位置的decoder,类似,与每个位置的encoder元素的隐藏状态作内积作为打分,重复之前步骤</p><p><img src="./Attention-Is-All-Your-Need/4.png" alt="4.png"></p><p>最后得到完整的输出序列</p><p><img src="./Attention-Is-All-Your-Need/5.png" alt="5.png"></p><p>公式如图.同时attention的表示有若干种变体,以针对不同情形进行改进</p><p><img src="./Attention-Is-All-Your-Need/6.png" alt="6.png"></p><p>对于attention,更为广泛的解释是:</p><blockquote><p>Given a set of vector values, and a vector query, attention is a technique to compute a weighted sum of the values, dependent on the query</p></blockquote><p>给定一个query向量和value向量,attention是一种依据query,计算value权重和的技术.<br>query决定了要在哪些value上pay attention,权重和是这些被挑选出来的value包含的<br>选择性求和.<br>attention是一种获得任意表示集(value)的固定大小表示的方法，它依赖于某些其他表示(query).<br>attention最初被用于机器翻译,后来被拓展到多个方向和领域,并促成transformer和bert的发展.</p><p>对于常规的RNN,是从左往右铺开的,对线性布局启发式编码,相近的词会互相影响含义.但是这样的神经网络需要跨越O(n)步长使得距离为n的单词互相作用.这意味着因为梯度问题长距离依赖很难被处理,并且线性顺序嵌入的单词,不利于句子语义的表示.这样的结构缺少并行性.</p><p><img src="./Attention-Is-All-Your-Need/7.png" alt="7.png"></p><p>先不考虑循环,引入word windows模型</p><p><img src="./Attention-Is-All-Your-Need/8.png" alt="8.png"><br>图片的数字表示可以计算状态之前的最小步数.不可并行操作的数量,不会影响句子的长度.</p><p><img src="./Attention-Is-All-Your-Need/9.png" alt="9.png"><br>堆叠单词窗口层允许更多单词之间的交互.<br>最大交互距离=序列长度/窗口大小,但如果序列太长，就会忽略长距离的上下文.</p><p>回到attention上,attention可以把每个词的表示视作一个query,合并来自一系列value表示的信息.前面说的attention是从encoder到decoder,在这attention用在单个句子里.</p><p><img src="./Attention-Is-All-Your-Need/10.png" alt="10.png"><br>每一层都可以和前一层的所有单词交互</p><p>引入self-attention概念<br><img src="./Attention-Is-All-Your-Need/11.png" alt="11.png"><br>每个词都有qkv,从第二层开始,每一层的qkv取值为前一层的输出x.依次计算key-query的关联度,从关联度计算attention权重,把权重和作为value.</p><p><img src="./Attention-Is-All-Your-Need/12.png" alt="12.png"><br>self-attention是在set上的操作,是无序的,输出的顺序是未知的.</p><p><img src="./Attention-Is-All-Your-Need/13.png" alt="13.png"><br>对于第一个问题,把位置信息编码进kqv,把句子序号作为一个向量,和每个qkv相加</p><p><img src="./Attention-Is-All-Your-Need/14.png" alt="14.png"></p><p>对于p的表示有两种思路<br><img src="./Attention-Is-All-Your-Need/15.png" alt="15.png"><br>一是用正弦曲线向量表示位置,优点在于绝对位置不那么重要,正弦曲线有周期性,可以推断更长的序列</p><p>二是从头开始,用绝对位置表示,每个$p_i$表示一列,$p_i$是一个可学习的参数.优点是每个位置数据都可以被学习.</p><p>对于第二个问题,在self-attention中加入线性相关性<br>对没一个输出向量,增加一个前馈神经网络.<br><img src="./Attention-Is-All-Your-Need/16.png" alt="16.png"></p><p>对于第三个问题,把一部分将来会出现的单词遮掩,在每一时序,改变keys和values,使之仅包含过去出现过的词.考虑并行性,设置未出现的词的attention分数为-∞.</p><p><img src="./Attention-Is-All-Your-Need/18.png" alt="18.png"></p><p><img src="./Attention-Is-All-Your-Need/19.png" alt="19.png"></p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> nlp </tag>
+            
+            <tag> cs224n </tag>
+            
+            <tag> 深度学习 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Hello World</title>
       <link href="/2021/12/08/hello-world/"/>
       <url>/2021/12/08/hello-world/</url>
