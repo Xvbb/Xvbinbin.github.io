@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://xvbinbin.xyz/"/>
-  <updated>2021-12-08T11:01:04.766Z</updated>
+  <updated>2021-12-10T17:44:53.033Z</updated>
   <id>https://xvbinbin.xyz/</id>
   
   <author>
@@ -18,10 +18,10 @@
   
   <entry>
     <title>Attention Is All Your Need</title>
-    <link href="https://xvbinbin.xyz/2021/12/08/attention-is-all-your-need/"/>
-    <id>https://xvbinbin.xyz/2021/12/08/attention-is-all-your-need/</id>
-    <published>2021-12-08T08:33:54.000Z</published>
-    <updated>2021-12-08T11:01:04.766Z</updated>
+    <link href="https://xvbinbin.xyz/2021/12/11/attention-is-all-your-need/"/>
+    <id>https://xvbinbin.xyz/2021/12/11/attention-is-all-your-need/</id>
+    <published>2021-12-10T17:40:36.000Z</published>
+    <updated>2021-12-10T17:44:53.033Z</updated>
     
     <summary type="html">
     
@@ -29,8 +29,8 @@
       
         
         
-          &lt;p&gt;&lt;img src=&quot;1.png&quot; alt=&quot;1.png&quot;&gt;&lt;br&gt;Attention&lt;/p&gt;
-&lt;p&gt;• 常规Seq2Seq的RNN网络,存在imformation
+          &lt;p&gt;论文地址:&lt;a href=&quot;https://arxiv.org/abs/1706.03762v5&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Attention Is All Your Need&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;the Transformer
         
       
     
@@ -46,6 +46,45 @@
       <category term="cs224n" scheme="https://xvbinbin.xyz/tags/cs224n/"/>
     
       <category term="深度学习" scheme="https://xvbinbin.xyz/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+    
+      <category term="论文研读" scheme="https://xvbinbin.xyz/tags/%E8%AE%BA%E6%96%87%E7%A0%94%E8%AF%BB/"/>
+    
+      <category term="Transformer" scheme="https://xvbinbin.xyz/tags/Transformer/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>CS224N attention学习笔记</title>
+    <link href="https://xvbinbin.xyz/2021/12/08/cs224n-attention-xue-xi-bi-ji/"/>
+    <id>https://xvbinbin.xyz/2021/12/08/cs224n-attention-xue-xi-bi-ji/</id>
+    <published>2021-12-08T08:33:54.000Z</published>
+    <updated>2021-12-10T17:42:07.664Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;img src=&quot;1.png&quot; alt&gt;&lt;br&gt;Attention&lt;/p&gt;
+&lt;p&gt;• 常规Seq2Seq的RNN网络，存在imformation
+        
+      
+    
+    </summary>
+    
+      <category term="深度学习" scheme="https://xvbinbin.xyz/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+    
+      <category term="nlp" scheme="https://xvbinbin.xyz/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/nlp/"/>
+    
+    
+      <category term="nlp" scheme="https://xvbinbin.xyz/tags/nlp/"/>
+    
+      <category term="cs224n" scheme="https://xvbinbin.xyz/tags/cs224n/"/>
+    
+      <category term="深度学习" scheme="https://xvbinbin.xyz/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+    
+      <category term="学习笔记" scheme="https://xvbinbin.xyz/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
