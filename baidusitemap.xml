@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://xvbinbin.xyz/2021/12/12/cs224n-lecture-11-question-answering/</loc>
+    <lastmod>2021-12-12</lastmod>
+  </url>  <url>
     <loc>https://xvbinbin.xyz/2021/12/11/attention-is-all-your-need/</loc>
-    <lastmod>2021-12-10</lastmod>
+    <lastmod>2021-12-12</lastmod>
   </url>  <url>
     <loc>https://xvbinbin.xyz/2021/12/08/cs224n-attention-xue-xi-bi-ji/</loc>
     <lastmod>2021-12-10</lastmod>
