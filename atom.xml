@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://xvbinbin.xyz/"/>
-  <updated>2021-12-12T16:46:15.734Z</updated>
+  <updated>2021-12-13T06:43:33.638Z</updated>
   <id>https://xvbinbin.xyz/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://xvbinbin.xyz/2021/12/12/cs224n-lecture-11-question-answering/"/>
     <id>https://xvbinbin.xyz/2021/12/12/cs224n-lecture-11-question-answering/</id>
     <published>2021-12-12T14:55:39.000Z</published>
-    <updated>2021-12-12T16:46:15.734Z</updated>
+    <updated>2021-12-13T06:43:33.638Z</updated>
     
     <summary type="html">
     
@@ -29,7 +29,7 @@
       
         
         
-          &lt;p&gt;30：44&lt;br&gt;QA系统有两种分类，一种是基于LSTM的attention模型，一种是在bert模型基础上微调。&lt;/p&gt;
+          &lt;p&gt;QA系统的模型有两种，一种是基于LSTM的attention模型，一种是在bert模型基础上微调。&lt;/p&gt;
 &lt;h1 id=&quot;BiDAFF：the-Bidirectional-Attention-Flow-model&quot;&gt;&lt;a
         
       
