@@ -335,7 +335,7 @@ BiDAFF：the Bidirectional Attention Flow model
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/11.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/10.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -506,7 +506,7 @@ BiDAFF：the Bidirectional Attention Flow model
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    727
+                    728
                 </div>
                 
 
@@ -557,7 +557,9 @@ BiDAFF：the Bidirectional Attention Flow model
 </ul>
 <p>$$m_i = BiLSTM(g_i)\in \mathbb(R)^{2H}$$</p>
 <p>输出层实质是两个分类器，分别预测答案在文本中过的起点和终点。<br>连接$g_i$和$m_i$，和$w_{start}^{T}$求内积，可以得到文本中每个位置的分数，然后softmax得到答案起点概率。类似，另一个分类器先对$m_i$做BiLSTM，然后和$g_i$连接起来，和$w_{end}^{T}$求内积，得到答案终点的概率。计算公式如下：</p>
-<p>$$p_{start} = softmax(w_{start}^{T}[g_i;m_i])\, \\ \, \\ m_i^\prime = BiLSTM(m_i)\in \mathbb{R}^{2H}\, \\ p_{end} = softmax(w_{end}^{T}[g_i;m_i^\prime ])\,\,\,\,\,\, w_{start},w_{end}\in \mathbb{R}^{10H} \\ \, \\ \iota(loss)= -log p_{start}(s^<em>) - log p_{end}(e^</em>)$$</p>
+<p>$$p_{start} = softmax(w_{start}^{T}[g_i;m_i])$$</p>
+<p>$$m_i^\prime = BiLSTM(m_i)\in \mathbb{R}^{2H}\,\\p_{end} = softmax(w_{end}^{T}[g_i;m_i^\prime ])\,\,\,\,\,\,w_{start},w_{end}\in \mathbb{R}^{10H}$$</p>
+<p>$$\iota(loss)= -log\,p_{start}(s^{*}) - log\,p_{end}(e^{e})$$</p>
 <p><img src="4.png" alt></p>
 
             </div>
@@ -928,7 +930,7 @@ BiDAFF：the Bidirectional Attention Flow model
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="CS224N Lecture 11 - Question Answering">
+                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="CS224N Lecture 11 - Question Answering">
                         
                         <span class="card-title">CS224N Lecture 11 - Question Answering</span>
                     </div>
@@ -1000,7 +1002,7 @@ BiDAFF：the Bidirectional Attention Flow model
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="Attention Is All Your Need">
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="Attention Is All Your Need">
                         
                         <span class="card-title">Attention Is All Your Need</span>
                     </div>
