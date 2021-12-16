@@ -335,7 +335,7 @@ BiDAFF：the Bidirectional Attention Flow model
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/10.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/8.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -506,14 +506,14 @@ BiDAFF：the Bidirectional Attention Flow model
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    728
+                    1.5k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    2 分
+                    5 分
                 </div>
                 
                 
@@ -561,6 +561,38 @@ BiDAFF：the Bidirectional Attention Flow model
 <p>$$m_i^\prime = BiLSTM(m_i)\in \mathbb{R}^{2H}\,\\p_{end} = softmax(w_{end}^{T}[g_i;m_i^\prime ])\,\,\,\,\,\,w_{start},w_{end}\in \mathbb{R}^{10H}$$</p>
 <p>$$\iota(loss)= -log\,p_{start}(s^{*}) - log\,p_{end}(e^{e})$$</p>
 <p><img src="4.png" alt></p>
+<h1 id="BERT模型在阅读理解的应用"><a href="#BERT模型在阅读理解的应用" class="headerlink" title="BERT模型在阅读理解的应用"></a>BERT模型在阅读理解的应用</h1><hr>
+<p>BERT模型是深度双向Transformer在大文本上的编码预训练，主要训练掩饰语言模型masked language model(MLM)和对下个句子的预测next sentence prediction(NSP)。BERT-base有12层1.1亿个参数，BERT-large有24层3.3亿个参数。<br>BERT模型把问题作为片段A，文本片段B，拼接起来作为输入，进行句子嵌入，答案是在片段B里对两个端点的预测，用两个softmax得到，损失函数和MiDAF一样。<br><img src="5.png" alt></p>
+<h2 id="BERT和BiDAF的比较"><a href="#BERT和BiDAF的比较" class="headerlink" title="BERT和BiDAF的比较"></a>BERT和BiDAF的比较</h2><hr>
+<p>两者的区别在于：</p>
+<ul>
+<li>BERT模型具有比BiDAF更多的参数。</li>
+<li>BERT建立于Transformers——没有循环结构并且易于并行，BiDAF建立于数个BiLSTM。</li>
+<li>BERT是预训练模型，BIDAF建立于GloVe——所有参数都需要从有监督数据集学习。</li>
+</ul>
+<p>两者的相似点在于：</p>
+<ul>
+<li>模型都旨在建立问题和文本之间的相互影响关系</li>
+<li>BERT模型使用了问题和文本的连接的自我注意力。<br>attention(Paragraph,P) + attention(P,Question) + attention(Q,P) + attention(Q,Q)</li>
+<li>研究表明，对BIDAF添加文本注意力attention(P,P)构建自我注意力层，性能会得到提升</li>
+</ul>
+<h2 id="SpanBERT"><a href="#SpanBERT" class="headerlink" title="SpanBERT"></a>SpanBERT</h2><hr>
+<p>SpanBERT模型修改了BERT的mask。BERT是随机选取15%的词mask，SpanBERT选择连续词块，使用两个词块的端点去预测所有掩饰掉的词——把所有的块内信息集中在端点上。<br>$$y_i = f(x_{s-1}),x_{e+1},p_{i-s+1}$$</p>
+<p><img src="6.png" alt></p>
+<p>但是机器阅读理解的依然没有解决。现在的模型往往只能对一类语料库测试表现良好，泛化能力欠佳。哪怕是BERT-large也不能处理一些简单的问题。</p>
+<h1 id="开放领域问答"><a href="#开放领域问答" class="headerlink" title="开放领域问答"></a>开放领域问答</h1><hr>
+<p>不同于机器阅读理解，开放领域问答假设拥有大量文档（如Wikipedia），但是不知道答案在什么位置，任务的目标是返回任意开放问题的答案。对之建立retrieve-reader框架。<br>在DRQA里，</p>
+<ul>
+<li>输入：大量文档，问题</li>
+<li>输出：代表答案的字符串</li>
+<li>retriever：检索得到和问题最相关的K个文档，K是预先定义的小数值，例如100。是一个标准的TF-IDF信息检索模型。</li>
+<li>reder：在K个文档里找出答案A。是一个学习得到的自然阅读理解模型，在SQuAD和其他远距离监督QA数据集上训练得到。</li>
+</ul>
+<p>可以对retriver进行训练。对retriver和reader联合训练，每一个文本可以用BERT编码为向量，问题分布和文章分布的内积可以作为信息检索分数。但是这在有大量文章的情况下不容易建模。<br><img src="7.png" alt></p>
+<p>稠密文章检索Dense passage retrieval(DPR)，使用问题-答案对，对检索器进行训练，可以获得比常规信息检索模型更好的表现。</p>
+<p>近期的工作表明，用生成答案的方式取代提取答案的方式，是有益的。</p>
+<p>大模型，例如T5，不使用明确的检索器，可以在开放领域问答取得很好的效果，<br><img src="8.png" alt></p>
+<p>也有不使用reader，把所有短语用密集向量编码，在推理时候脱离BERT模型，只做近邻搜索的方式。<br><img src="9.png" alt></p>
 
             </div>
             <hr />
@@ -921,36 +953,29 @@ BiDAFF：the Bidirectional Attention Flow model
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
-            </div>
+                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/12/12/cs224n-lecture-11-question-answering/">
+                <a href="/2021/12/14/cs224n-lecture-12-natural-language-generation/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="CS224N Lecture 11 - Question Answering">
+                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="CS224N Lecture 12 Natural Language Generation">
                         
-                        <span class="card-title">CS224N Lecture 11 - Question Answering</span>
+                        <span class="card-title">CS224N Lecture 12 Natural Language Generation</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            QA系统的模型有两种，一种是基于LSTM的attention模型，一种是在bert模型基础上微调。
-BiDAFF：the Bidirectional Attention Flow model
-整体结构从下往上：
-
-字符嵌入层
-词嵌入层
-短语
+                            
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-12-12
-                            </span>
+                        <span class="publish-date">
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2021-12-14
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
@@ -967,7 +992,6 @@ BiDAFF：the Bidirectional Attention Flow model
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
@@ -1002,7 +1026,7 @@ BiDAFF：the Bidirectional Attention Flow model
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="Attention Is All Your Need">
+                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="Attention Is All Your Need">
                         
                         <span class="card-title">Attention Is All Your Need</span>
                     </div>
@@ -1229,7 +1253,7 @@ BiDAFF：the Bidirectional Attention Flow model
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">4.5k</span>
+            <span class="white-color">5.3k</span>
             
 
             <br>

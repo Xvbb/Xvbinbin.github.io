@@ -4,11 +4,57 @@
   
     
     <entry>
+      <title>随笔</title>
+      <link href="/2021/12/14/sui-bi/"/>
+      <url>/2021/12/14/sui-bi/</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>CS224N Lecture 12 Natural Language Generation</title>
+      <link href="/2021/12/14/cs224n-lecture-12-natural-language-generation/"/>
+      <url>/2021/12/14/cs224n-lecture-12-natural-language-generation/</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+      
+      <categories>
+          
+          <category> 深度学习 </category>
+          
+          <category> nlp </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> nlp </tag>
+            
+            <tag> cs224n </tag>
+            
+            <tag> 深度学习 </tag>
+            
+            <tag> 学习笔记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>CS224N Lecture 11 - Question Answering</title>
       <link href="/2021/12/12/cs224n-lecture-11-question-answering/"/>
       <url>/2021/12/12/cs224n-lecture-11-question-answering/</url>
       
-        <content type="html"><![CDATA[<p>QA系统的模型有两种，一种是基于LSTM的attention模型，一种是在bert模型基础上微调。</p><h1 id="BiDAFF：the-Bidirectional-Attention-Flow-model"><a href="#BiDAFF：the-Bidirectional-Attention-Flow-model" class="headerlink" title="BiDAFF：the Bidirectional Attention Flow model"></a>BiDAFF：the Bidirectional Attention Flow model</h1><hr><p>整体结构从下往上：</p><ul><li>字符嵌入层</li><li>词嵌入层</li><li>短语嵌入层</li><li>Attention Flow层</li><li>modeling层</li><li>输出层<br><img src="1.png" alt></li></ul><h2 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h2><hr><p>编码部分包括了字符嵌入、词嵌入、短语嵌入层。<br>对文本和问题，分别作编码工作。字符嵌入通过CNN和max pooling实现，词嵌入使用GloVe实现串联，然后各自使用2个Bi-LSTM产生文本和问题的上下文关联嵌入向量。<br><img src="2.png" alt></p><h2 id="Attention"><a href="#Attention" class="headerlink" title="Attention"></a>Attention</h2><hr><p>Attention Flow层用于获取文本和问题之间的关联，在BiDFA论文中有两种表示方式：</p><ul><li>从文本到问题的注意力：对文本的每个词，匹配问题中最相关的词</li><li>从问题到文本的注意力：对于问题中的一些词，在文本中选择和（每一个）他们最相关的词</li></ul><p>实现方式如下：<br>第一步，$c_i$是文本中每一对上下文向量，$q_j$是问题中的每一对上下文向量，把$c_i$、$q_j$、$c_i$和$q_j$的逐个元素相乘的乘积得到的乘积向量（element-wise multiplication）链接起来，和之前学习得到的$w_{sim}^{T}，w_sim\in \mathbb{R}^{6H}$向量做内积，得到相似度分数$S_{i,j}$,一个数或者标量。<br>第二步，计算从文本到问题的注意力。$S_{i,j}$矩阵的每一行对应一个文本单词，对每一行做softmax，得到$\alpha_{i,j}$，然后和每个问题向量$q_j$相乘求和，得到$a_i$。<br>第三步，计算从问题到文本的注意力。对$S_{i,j}$每一行取最大值，表示和问题最相关的单词，然后做softmax得到$\beta_i$，和文本向量$c_i$相乘累加得到$b_i$。<br>最后将$c_i$,$a_i$,$c_i\, a_i$的每个元素内积的和，$c_i\, b_i$的每个元素内积的和链接起来，得到最终的输出，代表文本里的某个词。<br><img src="3.png" alt></p><h2 id="模型和输出层"><a href="#模型和输出层" class="headerlink" title="模型和输出层"></a>模型和输出层</h2><hr><p>模型层把Attention层的输出$g_i$传递给两个Bi-LSTM层。</p><ul><li>注意力层对问题和文本的词之间的相互影响建模</li><li>模型层对文本内的词的相互影响建模</li></ul><p>$$m_i = BiLSTM(g_i)\in \mathbb(R)^{2H}$$</p><p>输出层实质是两个分类器，分别预测答案在文本中过的起点和终点。<br>连接$g_i$和$m_i$，和$w_{start}^{T}$求内积，可以得到文本中每个位置的分数，然后softmax得到答案起点概率。类似，另一个分类器先对$m_i$做BiLSTM，然后和$g_i$连接起来，和$w_{end}^{T}$求内积，得到答案终点的概率。计算公式如下：</p><p>$$p_{start} = softmax(w_{start}^{T}[g_i;m_i])$$</p><p>$$m_i^\prime = BiLSTM(m_i)\in \mathbb{R}^{2H}\,\\p_{end} = softmax(w_{end}^{T}[g_i;m_i^\prime ])\,\,\,\,\,\,w_{start},w_{end}\in \mathbb{R}^{10H}$$</p><p>$$\iota(loss)= -log\,p_{start}(s^{*}) - log\,p_{end}(e^{e})$$</p><p><img src="4.png" alt></p>]]></content>
+        <content type="html"><![CDATA[<p>QA系统的模型有两种，一种是基于LSTM的attention模型，一种是在bert模型基础上微调。</p><h1 id="BiDAFF：the-Bidirectional-Attention-Flow-model"><a href="#BiDAFF：the-Bidirectional-Attention-Flow-model" class="headerlink" title="BiDAFF：the Bidirectional Attention Flow model"></a>BiDAFF：the Bidirectional Attention Flow model</h1><hr><p>整体结构从下往上：</p><ul><li>字符嵌入层</li><li>词嵌入层</li><li>短语嵌入层</li><li>Attention Flow层</li><li>modeling层</li><li>输出层<br><img src="1.png" alt></li></ul><h2 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h2><hr><p>编码部分包括了字符嵌入、词嵌入、短语嵌入层。<br>对文本和问题，分别作编码工作。字符嵌入通过CNN和max pooling实现，词嵌入使用GloVe实现串联，然后各自使用2个Bi-LSTM产生文本和问题的上下文关联嵌入向量。<br><img src="2.png" alt></p><h2 id="Attention"><a href="#Attention" class="headerlink" title="Attention"></a>Attention</h2><hr><p>Attention Flow层用于获取文本和问题之间的关联，在BiDFA论文中有两种表示方式：</p><ul><li>从文本到问题的注意力：对文本的每个词，匹配问题中最相关的词</li><li>从问题到文本的注意力：对于问题中的一些词，在文本中选择和（每一个）他们最相关的词</li></ul><p>实现方式如下：<br>第一步，$c_i$是文本中每一对上下文向量，$q_j$是问题中的每一对上下文向量，把$c_i$、$q_j$、$c_i$和$q_j$的逐个元素相乘的乘积得到的乘积向量（element-wise multiplication）链接起来，和之前学习得到的$w_{sim}^{T}，w_sim\in \mathbb{R}^{6H}$向量做内积，得到相似度分数$S_{i,j}$,一个数或者标量。<br>第二步，计算从文本到问题的注意力。$S_{i,j}$矩阵的每一行对应一个文本单词，对每一行做softmax，得到$\alpha_{i,j}$，然后和每个问题向量$q_j$相乘求和，得到$a_i$。<br>第三步，计算从问题到文本的注意力。对$S_{i,j}$每一行取最大值，表示和问题最相关的单词，然后做softmax得到$\beta_i$，和文本向量$c_i$相乘累加得到$b_i$。<br>最后将$c_i$,$a_i$,$c_i\, a_i$的每个元素内积的和，$c_i\, b_i$的每个元素内积的和链接起来，得到最终的输出，代表文本里的某个词。<br><img src="3.png" alt></p><h2 id="模型和输出层"><a href="#模型和输出层" class="headerlink" title="模型和输出层"></a>模型和输出层</h2><hr><p>模型层把Attention层的输出$g_i$传递给两个Bi-LSTM层。</p><ul><li>注意力层对问题和文本的词之间的相互影响建模</li><li>模型层对文本内的词的相互影响建模</li></ul><p>$$m_i = BiLSTM(g_i)\in \mathbb(R)^{2H}$$</p><p>输出层实质是两个分类器，分别预测答案在文本中过的起点和终点。<br>连接$g_i$和$m_i$，和$w_{start}^{T}$求内积，可以得到文本中每个位置的分数，然后softmax得到答案起点概率。类似，另一个分类器先对$m_i$做BiLSTM，然后和$g_i$连接起来，和$w_{end}^{T}$求内积，得到答案终点的概率。计算公式如下：</p><p>$$p_{start} = softmax(w_{start}^{T}[g_i;m_i])$$</p><p>$$m_i^\prime = BiLSTM(m_i)\in \mathbb{R}^{2H}\,\\p_{end} = softmax(w_{end}^{T}[g_i;m_i^\prime ])\,\,\,\,\,\,w_{start},w_{end}\in \mathbb{R}^{10H}$$</p><p>$$\iota(loss)= -log\,p_{start}(s^{*}) - log\,p_{end}(e^{e})$$</p><p><img src="4.png" alt></p><h1 id="BERT模型在阅读理解的应用"><a href="#BERT模型在阅读理解的应用" class="headerlink" title="BERT模型在阅读理解的应用"></a>BERT模型在阅读理解的应用</h1><hr><p>BERT模型是深度双向Transformer在大文本上的编码预训练，主要训练掩饰语言模型masked language model(MLM)和对下个句子的预测next sentence prediction(NSP)。BERT-base有12层1.1亿个参数，BERT-large有24层3.3亿个参数。<br>BERT模型把问题作为片段A，文本片段B，拼接起来作为输入，进行句子嵌入，答案是在片段B里对两个端点的预测，用两个softmax得到，损失函数和MiDAF一样。<br><img src="5.png" alt></p><h2 id="BERT和BiDAF的比较"><a href="#BERT和BiDAF的比较" class="headerlink" title="BERT和BiDAF的比较"></a>BERT和BiDAF的比较</h2><hr><p>两者的区别在于：</p><ul><li>BERT模型具有比BiDAF更多的参数。</li><li>BERT建立于Transformers——没有循环结构并且易于并行，BiDAF建立于数个BiLSTM。</li><li>BERT是预训练模型，BIDAF建立于GloVe——所有参数都需要从有监督数据集学习。</li></ul><p>两者的相似点在于：</p><ul><li>模型都旨在建立问题和文本之间的相互影响关系</li><li>BERT模型使用了问题和文本的连接的自我注意力。<br>attention(Paragraph,P) + attention(P,Question) + attention(Q,P) + attention(Q,Q)</li><li>研究表明，对BIDAF添加文本注意力attention(P,P)构建自我注意力层，性能会得到提升</li></ul><h2 id="SpanBERT"><a href="#SpanBERT" class="headerlink" title="SpanBERT"></a>SpanBERT</h2><hr><p>SpanBERT模型修改了BERT的mask。BERT是随机选取15%的词mask，SpanBERT选择连续词块，使用两个词块的端点去预测所有掩饰掉的词——把所有的块内信息集中在端点上。<br>$$y_i = f(x_{s-1}),x_{e+1},p_{i-s+1}$$</p><p><img src="6.png" alt></p><p>但是机器阅读理解的依然没有解决。现在的模型往往只能对一类语料库测试表现良好，泛化能力欠佳。哪怕是BERT-large也不能处理一些简单的问题。</p><h1 id="开放领域问答"><a href="#开放领域问答" class="headerlink" title="开放领域问答"></a>开放领域问答</h1><hr><p>不同于机器阅读理解，开放领域问答假设拥有大量文档（如Wikipedia），但是不知道答案在什么位置，任务的目标是返回任意开放问题的答案。对之建立retrieve-reader框架。<br>在DRQA里，</p><ul><li>输入：大量文档，问题</li><li>输出：代表答案的字符串</li><li>retriever：检索得到和问题最相关的K个文档，K是预先定义的小数值，例如100。是一个标准的TF-IDF信息检索模型。</li><li>reder：在K个文档里找出答案A。是一个学习得到的自然阅读理解模型，在SQuAD和其他远距离监督QA数据集上训练得到。</li></ul><p>可以对retriver进行训练。对retriver和reader联合训练，每一个文本可以用BERT编码为向量，问题分布和文章分布的内积可以作为信息检索分数。但是这在有大量文章的情况下不容易建模。<br><img src="7.png" alt></p><p>稠密文章检索Dense passage retrieval(DPR)，使用问题-答案对，对检索器进行训练，可以获得比常规信息检索模型更好的表现。</p><p>近期的工作表明，用生成答案的方式取代提取答案的方式，是有益的。</p><p>大模型，例如T5，不使用明确的检索器，可以在开放领域问答取得很好的效果，<br><img src="8.png" alt></p><p>也有不使用reader，把所有短语用密集向量编码，在推理时候脱离BERT模型，只做近邻搜索的方式。<br><img src="9.png" alt></p>]]></content>
       
       
       <categories>
