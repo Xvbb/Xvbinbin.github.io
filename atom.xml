@@ -83,46 +83,6 @@
   </entry>
   
   <entry>
-    <title>随笔</title>
-    <link href="https://xvbinbin.xyz/2021/12/14/sui-bi/"/>
-    <id>https://xvbinbin.xyz/2021/12/14/sui-bi/</id>
-    <published>2021-12-14T12:59:08.000Z</published>
-    <updated>2021-12-14T12:59:08.887Z</updated>
-    
-    <summary type="html">
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>CS224N Lecture 12 Natural Language Generation</title>
-    <link href="https://xvbinbin.xyz/2021/12/14/cs224n-lecture-12-natural-language-generation/"/>
-    <id>https://xvbinbin.xyz/2021/12/14/cs224n-lecture-12-natural-language-generation/</id>
-    <published>2021-12-14T06:42:39.000Z</published>
-    <updated>2021-12-14T12:58:31.117Z</updated>
-    
-    <summary type="html">
-    
-    </summary>
-    
-      <category term="深度学习" scheme="https://xvbinbin.xyz/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
-    
-      <category term="nlp" scheme="https://xvbinbin.xyz/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/nlp/"/>
-    
-    
-      <category term="nlp" scheme="https://xvbinbin.xyz/tags/nlp/"/>
-    
-      <category term="cs224n" scheme="https://xvbinbin.xyz/tags/cs224n/"/>
-    
-      <category term="深度学习" scheme="https://xvbinbin.xyz/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
-    
-      <category term="学习笔记" scheme="https://xvbinbin.xyz/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-  </entry>
-  
-  <entry>
     <title>CS224N Lecture 11 - Question Answering</title>
     <link href="https://xvbinbin.xyz/2021/12/12/cs224n-lecture-11-question-answering/"/>
     <id>https://xvbinbin.xyz/2021/12/12/cs224n-lecture-11-question-answering/</id>

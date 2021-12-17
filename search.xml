@@ -68,52 +68,6 @@
     
     
     <entry>
-      <title>随笔</title>
-      <link href="/2021/12/14/sui-bi/"/>
-      <url>/2021/12/14/sui-bi/</url>
-      
-        <content type="html"><![CDATA[]]></content>
-      
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>CS224N Lecture 12 Natural Language Generation</title>
-      <link href="/2021/12/14/cs224n-lecture-12-natural-language-generation/"/>
-      <url>/2021/12/14/cs224n-lecture-12-natural-language-generation/</url>
-      
-        <content type="html"><![CDATA[]]></content>
-      
-      
-      <categories>
-          
-          <category> 深度学习 </category>
-          
-          <category> nlp </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> nlp </tag>
-            
-            <tag> cs224n </tag>
-            
-            <tag> 深度学习 </tag>
-            
-            <tag> 学习笔记 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>CS224N Lecture 11 - Question Answering</title>
       <link href="/2021/12/12/cs224n-lecture-11-question-answering/"/>
       <url>/2021/12/12/cs224n-lecture-11-question-answering/</url>
