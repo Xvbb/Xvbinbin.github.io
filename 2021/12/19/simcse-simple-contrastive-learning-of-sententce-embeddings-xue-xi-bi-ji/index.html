@@ -331,7 +331,7 @@ SimCSE，是简单的对比学习框架，提高了句子嵌入的SOTA。我们�
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/20.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/21.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -525,8 +525,8 @@ SimCSE，是简单的对比学习框架，提高了句子嵌入的SOTA。我们�
 <h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><hr>
 <p>SimCSE，是简单的对比学习框架，提高了句子嵌入的SOTA。我们首先描述了一种无监督方法，它采用一个输入句子并在一个比较客观的条件下预测它自己，只使用标准dropout作为噪声。这种方式效果很好，和之前的有监督方法一样。发现dropout作为最小的数据增强，移除他们会导致表达崩溃。然后提出了一种有监督的方法，将自然语言推理数据集中的注释对结合到我们的对比学习框架中，使用entailment对作为positive，contradiction对作为硬负。在标准语义文本相似度(STS)任务上评估SimCSE，使用BERT-base的无监督模型和有监督模型分别实现了76.3%和81.6%的Spearman相关性，与之前的最佳结果相比提高了4.2%和2.2%。我们还从理论和经验上证明，对比学习目标将预先训练的嵌入各向异性空间正则化，使其更均匀，并且当有监督信号时，它能更好地对齐。</p>
 <h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><hr>
-<p>SimCSE是一个简单的对比句子嵌入框架，可以从无标签或者有标签数据集生成更好的句子嵌入，当和BERT或者RoBERTa组合在一起时对比目标(contrastive objective)非常有效。</p>
-<p>无监督的SimCSE通过用作噪声的dropout预测输入句子自身。也就是说，向预训练编码器传递两次相同的句子：通过两次标准的dropout，获得两个不同的嵌入作为“正例positive”。然后把相同batch的其他句子作为“负例negatives”，模型通过负例对正例预测。这种方式大幅度提升预测下个句子和离散数据增强(例如词侦测和替代)任务的性能，堪比以前的监督学习方式。<br><img src="1.png" alt="有监督SimCSE"></p>
+<p>SimCSE是一个简单的对比句子嵌入框架，可以从无标签或者有标签数据集生成更好的句子嵌入，当和BERT或者RoBERTa组合在一起时对比学习非常有效。</p>
+<p>无监督的SimCSE通过用作噪声的dropout预测输入句子自身。也就是说，向预训练编码器传递两次相同的句子：通过两次标准的dropout，获得两个不同的嵌入作为“正例positive”。然后把相同batch的其他句子作为“负例negatives”，模型通过负例对正例预测。这种方式大幅度提升预测下个句子和离散数据增强(例如词删除和替换)任务的性能，堪比以前的监督学习方式。<br><img src="1.png" alt="有监督SimCSE"></p>
 <p>有监督的SimCSE建立于使用自然语言推断(natural language inference， NLI)数据集做句子嵌入，在对比学习中整合注释句子对。把蕴含对作为正实例，添加对应的矛盾对作为hard负例，大大提升了性能。对比其他数据集，NLI数据集在学习句子嵌入时最为高效。<br><img src="2.png" alt="无监督SimCSE"></p>
 <p>借用Wang和Isola(2020)的分析工具，该工具利用语义相关的正对之间的对齐和整个表示空间的一致性来衡量学习嵌入的质量。通过实证分析，无监督SimCSE本质上提高了一致性，同时避免了dropout噪声的退化对齐，从而提高了表示的表现力。同样的分析表明，NLI训练信号可以进一步提高正对之间的对齐，产生更好的句子嵌入。将其与最近的发现联系起来，即预先训练的单词嵌入受到各向异性的影响，从频谱的角度证明了对比学习目标将句子嵌入空间的奇异值分布压平，从而提高一致性。</p>
 <h1 id="背景：对比学习"><a href="#背景：对比学习" class="headerlink" title="背景：对比学习"></a>背景：对比学习</h1><hr>
@@ -534,7 +534,7 @@ SimCSE，是简单的对比学习框架，提高了句子嵌入的SOTA。我们�
 <p>$${\iota}_i = -\log \frac{\frac{e^{sim(h_i,h_i^+)}}{\tau}}{\sum_{j=1}^{N}\frac{e^{sim(h_i,h_j^+)}}{\tau}}\tag{1}$$</p>
 <p>${\iota}$是温度超参，$sim(h_1,h_2)=\frac{h_1^Th_2}{||h_1||\cdot ||h_2||}$。使用例如BERT或者RoBERTa的预训练语言模型对输入句子编码：$h=f_{\theta}(x)$，然后通过对比学习用式1微调所有参数。</p>
 <h2 id="负实例"><a href="#负实例" class="headerlink" title="负实例"></a>负实例</h2><hr>
-<p>关键问题之一是构建$(x_i, x_i^{+})$对。<br>直观想法，把相同图像的两个随机transformer(例如裁剪、反转、变形、旋转)作为$x_i,x_i^+$。也可以通过类似词删除、重排序、替换的增强技术应用在语言表示上。然而，由于NLP的离散性，数据增强本质上是困难的。在中间表示上使用标准dropout优于这些离散算子。<br>在NLP中，相似的对抗学习目标在不同上下文中已经探索，在这些案例里，$(x_i, x_i^{+})$从问题-文章对这样的有监督数据集中手机，由于$x_i,x_i^+$的天然距离，这些芳芳经常使用双向编码器框架，例如对$x_i,x_i^+$使用两个独立编码器$f_{\theta _1},f_{\theta _2}$。对于句子嵌入，Logeswaran和Lee提出了通过把当前句子和下个句子组织成$(x_i, x_i^{+})$，使用双向编码器对抗学习的方法。</p>
+<p>关键问题之一是构建$(x_i, x_i^{+})$对。<br>直观想法，把相同图像的两个随机transformer(例如裁剪、反转、变形、旋转)作为$x_i,x_i^+$。也可以通过类似词删除、重排序、替换的增强技术应用在语言表示上。然而，由于NLP的离散性，数据增强本质上是困难的。在中间表示上使用标准dropout优于这些离散算子。<br>在NLP中，相似的对抗学习目标在不同上下文中已经探索，在这些案例里，$(x_i, x_i^{+})$从问题-文章对这样的有监督数据集中手机，由于$x_i,x_i^+$的天然距离，这些芳芳经常使用双向编码器框架，例如对$x_i,x_i^+$使用两个独立编码器$f_{\theta _1},f_{\theta _2}$。对于句子嵌入，Logeswaran和Lee提出了通过把当前句子和下个句子组织成$(x_i, x_i^{+})$，使用双向编码器对比学习的方法。</p>
 <h2 id="对齐和一致性"><a href="#对齐和一致性" class="headerlink" title="对齐和一致性"></a>对齐和一致性</h2><hr>
 <p>Wang和Isola发现对抗学习相关的两个关键属性：对齐和一致性，提出使用这两个属性的衡量表达的质量。给定一个正例对$p_{pos}$的分布，对齐计算成对实例嵌入之间的预期距离(例如把已经标准化的表示累加)：</p>
 <p>$$\iota _{align}\triangleq \underset{(x,x^+) \backsim pos}{\mathbb{E}}||f(x)-f(x^+)||^2 \tag{2}$$</p>
@@ -567,7 +567,7 @@ SimCSE，是简单的对比学习框架，提高了句子嵌入的SOTA。我们�
 <h1 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h1><hr>
 <p><img src="6.png" alt="点的颜色对应不同的STS性能"><br>图片展现了根据不同句子嵌入模型的平均STS结果的对齐性和均匀性，可以发现：</p>
 <ul>
-<li>虽然预训练嵌入有好好的对齐性，他们的均匀性很差，嵌入是高各异向性的。</li>
+<li>虽然预训练嵌入很好的对齐性，他们的均匀性很差，嵌入是高各异向性的。</li>
 <li>类似BERT-flow和BERT-whitening的预处理方式极大提升了均匀性，但是损害了对齐性。</li>
 <li>无监督SimCSE提升对齐性的同时保持了良好的均匀性。</li>
 <li>SimCSE在合并有监督数据进一步提升了均匀性。</li>
@@ -941,7 +941,7 @@ SimCSE，是简单的对比学习框架，提高了句子嵌入的SOTA。我们�
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="SimCSE:Simple Contrastive Learning of Sententce Embeddings学习笔记">
+                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="SimCSE:Simple Contrastive Learning of Sententce Embeddings学习笔记">
                         
                         <span class="card-title">SimCSE:Simple Contrastive Learning of Sententce Embeddings学习笔记</span>
                     </div>
@@ -1005,7 +1005,7 @@ SimCSE，是简单的对比学习框架，提高了句子嵌入的SOTA。我们�
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="ERNIE: Enhanced Representation through Knowledge Integration学习笔记">
+                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="ERNIE: Enhanced Representation through Knowledge Integration学习笔记">
                         
                         <span class="card-title">ERNIE: Enhanced Representation through Knowledge Integration学习笔记</span>
                     </div>
@@ -1045,16 +1045,16 @@ ERINE（Enhanced Representation through Knowledge Int
                         <span class="chip bg-color">nlp</span>
                     </a>
                     
+                    <a href="/tags/cs224n/" target="_blank">
+                        <span class="chip bg-color">cs224n</span>
+                    </a>
+                    
                     <a href="/tags/深度学习/" target="_blank">
                         <span class="chip bg-color">深度学习</span>
                     </a>
                     
                     <a href="/tags/论文研读/" target="_blank">
                         <span class="chip bg-color">论文研读</span>
-                    </a>
-                    
-                    <a href="/tags/cs224n/" target="_blank">
-                        <span class="chip bg-color">cs224n</span>
                     </a>
                     
                     <a href="/tags/Transformer/" target="_blank">
