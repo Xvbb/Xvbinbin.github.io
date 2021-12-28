@@ -2,16 +2,30 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://xvbinbin.xyz/2021/12/17/bert-pre-training-of-deep-bidirectional-transformers-for-language-understanding-lun-wen-yan-du/</loc>
+    <loc>https://xvbinbin.xyz/2021/12/28/esimcse-enhanced-sample-building-method-for-contrastive-learning-of-unsupervised-sentence-embedding/</loc>
     
-    <lastmod>2021-12-22T11:25:39.789Z</lastmod>
+    <lastmod>2021-12-28T05:50:55.559Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://xvbinbin.xyz/2021/12/19/simcse-simple-contrastive-learning-of-sententce-embeddings-xue-xi-bi-ji/</loc>
     
-    <lastmod>2021-12-20T00:59:12.360Z</lastmod>
+    <lastmod>2021-12-28T02:44:26.319Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://xvbinbin.xyz/2021/12/23/paddle-paddle-xue-xi-bi-ji/</loc>
+    
+    <lastmod>2021-12-23T13:08:02.351Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://xvbinbin.xyz/2021/12/17/bert-pre-training-of-deep-bidirectional-transformers-for-language-understanding-lun-wen-yan-du/</loc>
+    
+    <lastmod>2021-12-22T11:25:39.789Z</lastmod>
     
   </url>
   

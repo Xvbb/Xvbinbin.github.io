@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://xvbinbin.xyz/"/>
-  <updated>2021-12-20T00:59:12.360Z</updated>
+  <updated>2021-12-28T05:50:55.559Z</updated>
   <id>https://xvbinbin.xyz/</id>
   
   <author>
@@ -17,11 +17,73 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>ESimCSE:Enhanced Sample Building Method for Contrastive Learning of Unsupervised Sentence Embedding</title>
+    <link href="https://xvbinbin.xyz/2021/12/28/esimcse-enhanced-sample-building-method-for-contrastive-learning-of-unsupervised-sentence-embedding/"/>
+    <id>https://xvbinbin.xyz/2021/12/28/esimcse-enhanced-sample-building-method-for-contrastive-learning-of-unsupervised-sentence-embedding/</id>
+    <published>2021-12-28T02:42:16.000Z</published>
+    <updated>2021-12-28T05:50:55.559Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;论文地址：&lt;a href=&quot;https://arxiv.org/pdf/2109.04380.pdf&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;ESimCSE:Enhanced Sample Building Method for
+        
+      
+    
+    </summary>
+    
+      <category term="深度学习" scheme="https://xvbinbin.xyz/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+    
+      <category term="nlp" scheme="https://xvbinbin.xyz/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/nlp/"/>
+    
+    
+      <category term="nlp" scheme="https://xvbinbin.xyz/tags/nlp/"/>
+    
+      <category term="深度学习" scheme="https://xvbinbin.xyz/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+    
+      <category term="论文研读" scheme="https://xvbinbin.xyz/tags/%E8%AE%BA%E6%96%87%E7%A0%94%E8%AF%BB/"/>
+    
+      <category term="文本匹配" scheme="https://xvbinbin.xyz/tags/%E6%96%87%E6%9C%AC%E5%8C%B9%E9%85%8D/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>paddle paddle学习笔记</title>
+    <link href="https://xvbinbin.xyz/2021/12/23/paddle-paddle-xue-xi-bi-ji/"/>
+    <id>https://xvbinbin.xyz/2021/12/23/paddle-paddle-xue-xi-bi-ji/</id>
+    <published>2021-12-23T12:29:49.000Z</published>
+    <updated>2021-12-23T13:08:02.351Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;paddlenlp-transformer&quot;&gt;&lt;a href=&quot;#paddlenlp-transformer&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="深度学习" scheme="https://xvbinbin.xyz/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+      <category term="深度学习" scheme="https://xvbinbin.xyz/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+    
+      <category term="paddlepaddle" scheme="https://xvbinbin.xyz/tags/paddlepaddle/"/>
+    
+  </entry>
+  
+  <entry>
     <title>SimCSE:Simple Contrastive Learning of Sententce Embeddings学习笔记</title>
     <link href="https://xvbinbin.xyz/2021/12/19/simcse-simple-contrastive-learning-of-sententce-embeddings-xue-xi-bi-ji/"/>
     <id>https://xvbinbin.xyz/2021/12/19/simcse-simple-contrastive-learning-of-sententce-embeddings-xue-xi-bi-ji/</id>
     <published>2021-12-19T05:52:12.000Z</published>
-    <updated>2021-12-20T00:59:12.360Z</updated>
+    <updated>2021-12-28T02:44:26.319Z</updated>
     
     <summary type="html">
     
@@ -45,6 +107,8 @@
       <category term="深度学习" scheme="https://xvbinbin.xyz/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
     
       <category term="论文研读" scheme="https://xvbinbin.xyz/tags/%E8%AE%BA%E6%96%87%E7%A0%94%E8%AF%BB/"/>
+    
+      <category term="文本匹配" scheme="https://xvbinbin.xyz/tags/%E6%96%87%E6%9C%AC%E5%8C%B9%E9%85%8D/"/>
     
   </entry>
   

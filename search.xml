@@ -4,6 +4,66 @@
   
     
     <entry>
+      <title>ESimCSE:Enhanced Sample Building Method for Contrastive Learning of Unsupervised Sentence Embedding</title>
+      <link href="/2021/12/28/esimcse-enhanced-sample-building-method-for-contrastive-learning-of-unsupervised-sentence-embedding/"/>
+      <url>/2021/12/28/esimcse-enhanced-sample-building-method-for-contrastive-learning-of-unsupervised-sentence-embedding/</url>
+      
+        <content type="html"><![CDATA[<p>论文地址：<a href="https://arxiv.org/pdf/2109.04380.pdf" target="_blank" rel="noopener">ESimCSE:Enhanced Sample Building Method for Contrastive Learning of Unsupervised Sentence Embedding</a></p><h1 id="1-ESimCSE的设计思路"><a href="#1-ESimCSE的设计思路" class="headerlink" title="1. ESimCSE的设计思路"></a>1. ESimCSE的设计思路</h1><hr><p>ESimCSE是基于SimCSE设计的。SimCSE建立在transformer上，会把长度信息编码进句子嵌入。因此从相同句子提取的正例对包含相同的长度信息，而从不同句子提取的负例对包含不同的长度信息。正例对和负例对包含的不同长度信息可以看做是一个特征用以区分他们。语义模型训练时可能产生偏置，认为两个有相同长度的句子，在语义上更相似。<br>故而ESimCSE通过对输入句子进行<strong>词重复(Word Repetition)</strong> 缓解这一问题，通过<strong>动量对比(Momentum contrast)</strong> ，无需额外计算，增加负例对的数量。这两种方法都能提升模型性能，组合在一起时可以发挥更好的效果。</p><h1 id="2-ESimCSE模型结构"><a href="#2-ESimCSE模型结构" class="headerlink" title="2. ESimCSE模型结构"></a>2. ESimCSE模型结构</h1><hr><p><img src="1.png" alt="ESimCSE模型结构"></p><h1 id="3-具体设计"><a href="#3-具体设计" class="headerlink" title="3. 具体设计"></a>3. 具体设计</h1><hr><h2 id="3-1-Word-Repetition"><a href="#3-1-Word-Repetition" class="headerlink" title="3.1. Word Repetition"></a>3.1. Word Repetition</h2><p>通过随机复制句子里的一些词，生成更多的负例对。例如“I like this apple because it looks so fresh and I think it should be delicious.”，经过处理可以表示成“I <em>I</em> like this apple apple because it looks <em>looks</em> so fresh <em>fresh</em> and I think it should be delicious <em>delicious</em>.”<br>给定一个句子，经过分词处理后得到子序列，$x=\{x_1,x_2,\cdots, x_N\}$，$N$是句子的长度。定义需要重复的token长度：<br>$$dup_ len\in [0,max(2, int(dup_rate * N))]$$</p><p>dup_rate是表示最大重复率的超参，dup_len是上述区间里的随机值。之后通过均匀分布选择居中dup_len个数的词进行重复操作，组成dup_set集合：<br>$$dup_ set=uniform(range=[1,N],num=dup_ len)$$<br>原序列$x$就可以表示橙$x^+=\{x_1,x_1,x_2,\cdots, x_N\}$$</p><br><h2 id="3-2-Momentum-contrast"><a href="#3-2-Momentum-contrast" class="headerlink" title="3.2. Momentum contrast"></a>3.2. Momentum contrast</h2><p>通过一个队列存储句子嵌入的信息，当前mini-batch的句子嵌入入队，同时较老的句子嵌入出队，句子嵌入的信息得以重复使用。在这个过程中不进行dropout，缩小训练和预测之间的差距。<br>把编码器的元素记作$\theta _e$，Momentum-updated编码器的元素记作$\theta _m$，通过以下形式更新$\theta _m$：<br>$$\theta _m \leftarrow \lambda \theta _m +(1-\lambda) \theta _e$$</p><p>$\lambda$表示动量系数。只有$\theta _e$通过反向传播更新，$\theta _m$被用于生成句子，因为动量更新使$\theta _m$演化得比$\theta _e$更平滑。虽然队列中的嵌入是由不同编码器编码得到，这些编码器的区别很小。</p><p>最终ESimSCE的损失函数可以表示为：<br>$$l_i = - \log \frac{e^{sim(h_i,h_i^+)/\tau }}{\sum_{j=1}^N e^{sim(h_i,h_i^+)/\tau} + \sum_{m=1}^M e^{sim(h_i,h_m^+)/\tau}}$$</p><p>$h_m^+$表示momentum-upadated队列中的句子嵌入，$M$表示队列的size。</p><h1 id="4-实验"><a href="#4-实验" class="headerlink" title="4. 实验"></a>4. 实验</h1><hr><p>在在STS 2012-2016和STS-B数据集上进行文本域以相似度实验，实验结果如图：<br><img src="2.png" alt="STS-B development set"></p><p><img src="4.png" alt="7 STS test set"></p><h1 id="5-消融研究"><a href="#5-消融研究" class="headerlink" title="5. 消融研究"></a>5. 消融研究</h1><hr><p>实验表明，dropout为0.1，词重复率为0.32，momentum contrast队列size为2.5倍batch size时模型性能最佳。<br><img src="3.png" alt="dropout影响的研究"></p><p><img src="5.png" alt="dup-rate影响的研究"></p><p><img src="7.png" alt="momentum contrast队列size影响的研究"></p><h1 id="6-参考文献："><a href="#6-参考文献：" class="headerlink" title="6. 参考文献："></a>6. 参考文献：</h1><ol><li><a href="https://arxiv.org/pdf/2109.04380.pdf" target="_blank" rel="noopener">ESimCSE:Enhanced Sample Building Method for Contrastive Learning of Unsupervised Sentence Embedding</a></li></ol>]]></content>
+      
+      
+      <categories>
+          
+          <category> 深度学习 </category>
+          
+          <category> nlp </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> nlp </tag>
+            
+            <tag> 深度学习 </tag>
+            
+            <tag> 论文研读 </tag>
+            
+            <tag> 文本匹配 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>paddle paddle学习笔记</title>
+      <link href="/2021/12/23/paddle-paddle-xue-xi-bi-ji/"/>
+      <url>/2021/12/23/paddle-paddle-xue-xi-bi-ji/</url>
+      
+        <content type="html"><![CDATA[<h1 id="paddlenlp-transformer"><a href="#paddlenlp-transformer" class="headerlink" title="paddlenlp.transformer"></a>paddlenlp.transformer</h1><blockquote><p>基于Transformer结构相关的预训练模型API，包含ERNIE, BERT, RoBERTa, Electra等主流经典结构和下游任务</p></blockquote><p>paddle.transformer</p><ul><li>auto<ul><li>modeling</li><li>tokenizer</li></ul></li><li>bert<ul><li>modeling</li><li>tokenizer</li></ul></li><li>ernie<br>-modeling<ul><li>tokenizer</li></ul></li><li>attention_utils</li><li>distill_utils</li><li>generation_utils</li><li>model_utils</li><li>optimization</li><li>tokenizer_utils</li><li>utils</li></ul><h1 id="auto-modeling"><a href="#auto-modeling" class="headerlink" title="auto.modeling"></a>auto.modeling</h1><hr><pre><code>class methodfrom_pretrained(pretrained_model_name_or_path, task=None, *model_args, **kwargs)</code></pre><ul><li>pretrained_model_name_or_path (str) –<ul><li>内置预训练模型的名字</li><li>社区贡献的预训练模型的名字</li><li>本地目录路径，包含权重文件<em>model_state.pdparams</em>和模型配置文件<em>model_config.json</em></li></ul></li><li>task(str) –<br>具体的下游任务，支持’Model’, ‘ForPretraining’, ‘ForSequenceClassification’, ‘ForTokenClassification’, ‘ForQuestionAnswering’, ‘ForMultipleChoice’, ‘ForMaskedLM’, ‘ForCausalLM’, ‘Encoder’, ‘Decoder’, ‘Generator’, ‘Discriminator’, ‘ForConditionalGeneration’</li><li>*model_args(tuple) –<br><code>__init__</code>的位置参数，用于初始化模型</li><li>**kwargs(dict) –<br><code>__init__</code>的关键词参数。如果提供了本参数，模型初始化时更新预定义的关键词参数。如果关键词是基础模型包含的<code>__init__</code>的名字，更新基础模型的对应参数值，否则更新产生的模型的参数值。</li></ul><h1 id="model-utils"><a href="#model-utils" class="headerlink" title="model_utils"></a>model_utils</h1><hr><blockquote><p>class PretrainedModel(name_scope=None, dtype=’float32’)</p></blockquote><p>The base class for all pretrained models. It mainly provides common methods for loading (construction and loading) and saving pretrained models. Loading and saving also rely on the following class attributes which should be overridden by derived classes accordingly:</p><ul><li><p>model_config_file (str): Represents the file name of model configuration for configuration saving and loading in local file system. The value is model_config.json.</p></li><li><p>resource_files_names (dict): Name of local file where the model configuration can be saved and loaded locally. Currently, resources only include the model state, thus the dict only includes <code>&#39;model_state&#39;</code> as key with corresponding value <code>&#39;model_state.pdparams&#39;</code> for model weights saving and loading.</p></li><li><p>pretrained_init_configuration (dict): Provides the model configurations of built-in pretrained models (contrasts to models in local file system). It has pretrained model names as keys (such as <code>bert-base-uncased</code>), and the values are dict preserving corresponding configuration for model initialization.</p></li><li><p>pretrained_resource_files_map (dict): Provides resource URLs of built-in pretrained models (contrasts to models in local file system). It has the same key as resource_files_names (that is <code>&quot;model_state&quot;</code>), and the corresponding value is a dict with specific model name to model weights URL mapping (such as “bert-base-uncased” -&gt; “<a href="https://bj.bcebos.com/paddlenlp/models/transformers/bert-base-uncased.pdparams&quot;" target="_blank" rel="noopener">https://bj.bcebos.com/paddlenlp/models/transformers/bert-base-uncased.pdparams&quot;</a>).</p></li><li><p>base_model_prefix (str): Represents the attribute associated to the base model in derived classes of the same architecture adding layers on top of the base model. Note: A base model class is pretrained model class decorated by register_base_model, such as BertModel; A derived model class is a pretrained model class adding layers on top of the base model, and it has a base model as attribute, such as BertForSequenceClassification.</p></li></ul><h1 id="tokenizer-utils"><a href="#tokenizer-utils" class="headerlink" title="tokenizer_utils"></a>tokenizer_utils</h1><hr><blockquote><p>class PretrainedTokenizer(<em>args, *</em>kwargs)</p></blockquote><p>The base class for all pretrained tokenizers. It mainly provides common methods for loading (construction and loading) and saving pretrained tokenizers. Loading and saving also rely on the following class attributes which should be overridden by derived classes accordingly:</p><ul><li><p>tokenizer_config_file (str):<br>Represents the file name of tokenizer configuration for configuration saving and loading in local file system. The value is <code>tokenizer_config.json</code>.</p></li><li><p>resource_files_names (dict):<br> Represents resources to specific file names mapping for resource saving and loading in local file system. The keys of dict representing resource items should be argument names in tokenizer’s <code>__init__</code>method, and the values are file names for saving and loading corresponding resources. The mostly used resources here are vocabulary file and sentence-piece model file.</p></li><li><p>pretrained_init_configuration (dict):<br>Provides the tokenizer configurations of built-in pretrained tokenizers (contrasts to tokenizers in local file system). It has pretrained tokenizer names as keys (the same as pretrained model names, such as <code>bert-base-uncased</code>), and the values are dict preserving corresponding configuration for tokenizer initialization.</p></li><li><p>pretrained_resource_files_map (dict): Provides resource URLs of built-in pretrained tokenizers (contrasts to tokenizers in local file system). It has the same keys as <code>resource_files_names</code>, and the values are also dict mapping specific pretrained tokenizer names (such as <code>bert-base-uncased</code>) to corresponding resource URLs.</p></li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> 深度学习 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 深度学习 </tag>
+            
+            <tag> paddlepaddle </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>SimCSE:Simple Contrastive Learning of Sententce Embeddings学习笔记</title>
       <link href="/2021/12/19/simcse-simple-contrastive-learning-of-sententce-embeddings-xue-xi-bi-ji/"/>
       <url>/2021/12/19/simcse-simple-contrastive-learning-of-sententce-embeddings-xue-xi-bi-ji/</url>
@@ -27,6 +87,8 @@
             <tag> 深度学习 </tag>
             
             <tag> 论文研读 </tag>
+            
+            <tag> 文本匹配 </tag>
             
         </tags>
       
